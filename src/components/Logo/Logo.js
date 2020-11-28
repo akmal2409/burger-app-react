@@ -1,9 +1,9 @@
-import React from 'react';
-import Styled from 'styled-components';
-import burgerLogo from '../../assets/images/burger-logo.png';
+import React from "react";
+import Styled from "styled-components";
+import burgerLogo from "../../assets/images/burger-logo.png";
 
 const StyledLogo = Styled.div`
-  height: ${props => props.height}%;
+  height: ${(props) => props.height}%;
   padding: 5px;
   background-color: white;
   // border: 1px solid #001233;

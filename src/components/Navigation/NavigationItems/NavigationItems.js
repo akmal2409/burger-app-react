@@ -12,9 +12,7 @@ const StyledNavigationItems = Styled.ul`
   height: 100%;
 
   @media (min-width: 500px) {
-    & {
-      flex-flow: row;
-    }
+    flex-flow: row;
   }
 `;
 
