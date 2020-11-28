@@ -3,14 +3,13 @@ import Styled from 'styled-components';
 import burgerLogo from '../../assets/images/burger-logo.png';
 
 const StyledLogo = Styled.div`
-  height: 80%;
+  height: ${props => props.height}%;
   padding: 5px;
-  background-color: #00a8e8;
-  border: 1px solid #001233;
-  border-radius: 50%;
+  background-color: white;
+  // border: 1px solid #001233;
+  border-radius: 10px;
   text-align: center;
-  opacity: 0.75;
-  animation:spin 10s linear infinite;
+  // animation:spin 10s linear infinite;
   .logo {
     margin-top: 7px;
     height: 70%;
@@ -25,7 +24,7 @@ const StyledLogo = Styled.div`
 `;
 
 const logo = (props) => (
-  <StyledLogo>
+  <StyledLogo height={props.height} style={props.style}>
     <img className="logo" src={burgerLogo} alt="MyBurger" />
   </StyledLogo>
 );
