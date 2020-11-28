@@ -1,6 +1,16 @@
 .BuildControls {
   width: 100%;
-  background-color: #CF8F2E;
+  background: #f12711; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #f5af19,
+    #f12711
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #f5af19,
+    #f12711
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -10,7 +20,7 @@
 }
 
 .OrderButton {
-  background-color: #DAD735;
+  background-color: #dad735;
   outline: none;
   cursor: pointer;
   border: 1px solid #966909;
@@ -19,16 +29,26 @@
   font-size: 1.2em;
   padding: 15px 30px;
   box-shadow: 2px 2px 2px #966909;
+  transition: all 0.25s;
 }
 
-.OrderButton:hover, .OrderButton:active {
-  background-color: #A0DB41;
-  border: 1px solid #966909;
-  color: #966909;
+.OrderButton:hover,
+.OrderButton:active {
+  background-color: #eeef20;
+  border: 1px solid #fb5607;
+  color: black;
+  font-weight: bold;
+  transform: translateY(-0.25em);
+  box-shadow: 0 0.5em 0.5em -0.25em #eeef20;
+}
+
+.OrderButton:hover:disabled {
+  box-shadow: 0 0.5em 0.5em -0.25em #e71d36;
+  transform: none;
 }
 
 .OrderButton:disabled {
-  background-color: #C7C6C6;
+  background-color: #c7c6c6;
   cursor: not-allowed;
   border: 1px solid #ccc;
   color: #888888;
@@ -40,12 +60,12 @@
 
 @keyframes enable {
   0% {
-      transform: scale(1);
+    transform: scale(1);
   }
   60% {
-      transform: scale(1.1);
+    transform: scale(1.1);
   }
   100% {
-      transform: scale(1);
+    transform: scale(1);
   }
 }

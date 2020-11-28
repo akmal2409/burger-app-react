@@ -16,19 +16,31 @@ const PriceTag = Styled.div`
   height: 1.7em;
   border: 1.5px solid #f4d004;
   background-color: #DAD735;
-  box-shadow: 2px 2px 2px #966909;
   font-weight: 700;
   font-family: inherit;
   text-align: center;
   cursor: pointer;
   position: relative;
   left: 2.96em;
+  transition: all 0.25s;
+  &:hover {
+    background-color: #eeef20;
+    border: 1.5px solid #fb5607;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0.25em 0.25em -0.1em #eeef20;
+    transform: translateY(-0.2em);
+
+    .red {
+      color: red;
+    }
+  }
 `;
 
 const buildControls = (props) => {
   return (
     <div className={classes.BuildControls}>
-      <PriceTag>Current Price: {props.totalPrice.toFixed(2)} $</PriceTag>
+      <PriceTag>Current Price: <span className="red">{props.totalPrice.toFixed(2)}</span> $</PriceTag>
       {controls.map((control) => {
         return (
           <BuildControl
