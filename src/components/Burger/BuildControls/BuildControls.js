@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./BuildControls.module.css";
 import BuildControl from "./BuildControl/BuildControl";
 import Styled from "styled-components";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const controls = [
   { label: "Salad", type: "salad" },
@@ -41,7 +41,10 @@ const PriceTag = Styled.div`
 const buildControls = (props) => {
   return (
     <div className={classes.BuildControls}>
-      <PriceTag>Current Price: <span className="red">{props.totalPrice.toFixed(2)}</span> $</PriceTag>
+      <PriceTag>
+        Current Price:{" "}
+        <span className="red">{props.totalPrice.toFixed(2)}</span> $
+      </PriceTag>
       {controls.map((control) => {
         return (
           <BuildControl
@@ -67,7 +70,7 @@ const buildControls = (props) => {
 buildControls.propTypes = {
   disabled: PropTypes.object,
   ordered: PropTypes.func,
-  purchasable: PropTypes.bool
-}
+  purchasable: PropTypes.bool,
+};
 
 export default buildControls;
