@@ -1,5 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
+import PropTypes from 'prop-types';
 
 const StyledToggle = Styled.button`
   height: 100%;
@@ -25,4 +26,7 @@ const drawerToggle = (props) => (
   </StyledToggle>
 );
 
+drawerToggle.propTypes = {
+  toggle: PropTypes.func
+}
 export default drawerToggle;
