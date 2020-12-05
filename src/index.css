@@ -4,5 +4,7 @@ body {
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #ece9e6; 
+  background: -webkit-linear-gradient(to right, #ece9e6, #ffffff); 
+  background: linear-gradient(to right, #ece9e6, #ffffff); 
 }
-
