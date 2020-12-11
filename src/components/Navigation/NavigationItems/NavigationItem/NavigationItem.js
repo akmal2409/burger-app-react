@@ -47,7 +47,7 @@ const StyledNavigationItem = Styled.li`
 
 const navigationItem = (props) => (
   <StyledNavigationItem>
-    <NavLink to={props.link} exact={props.link === "/" ? true : false}>
+    <NavLink to={props.link} exact={props.exact}>
       {props.children}
     </NavLink>
   </StyledNavigationItem>

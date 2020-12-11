@@ -5,6 +5,8 @@ import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Spinner from "./components/UI/Spinner/Spinner";
 
 const Checkout = React.lazy(() => import("./containers/Checkout/Checkout"));
+const Orders = React.lazy(() => import("./containers/Orders/Orders"));
+
 
 class App extends Component {
   render() {
@@ -20,6 +22,14 @@ class App extends Component {
                   <Checkout {...props} />
                 </Suspense>
               )}
+            />
+            <Route 
+            path="/orders"
+            render={(props) => (
+              <Suspense fallback={<Spinner />}>
+                <Orders {...props} />
+              </Suspense>
+            )}
             />
           </Switch>
         </Layout>
