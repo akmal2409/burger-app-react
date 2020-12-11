@@ -21,7 +21,7 @@
 .Loader:before {
   width: 50%;
   height: 50%;
-  background: #ece9e6; 
+  background: transparent; 
   background: -webkit-linear-gradient(to right, #ece9e6, #ffffff); 
   background: linear-gradient(to right, #ece9e6, #ffffff);
   border-radius: 100% 0 0 0;
@@ -31,7 +31,7 @@
   content: '';
 }
 .Loader:after {
-  background: #ece9e6; 
+  background: transparent; 
   background: -webkit-linear-gradient(to right, #ece9e6, #ffffff); 
   background: linear-gradient(to right, #ece9e6, #ffffff);
   width: 75%;

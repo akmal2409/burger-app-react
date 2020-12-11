@@ -8,17 +8,22 @@ const ContactData = React.lazy(() => import("./ContactData/ContactData"));
 class Checkout extends Component {
   state = {
     ingredients: null,
+    totalPrice: 0
   };
 
   componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
-
+    let price = 0;
     for (let param of query.entries()) {
-      ingredients[param[0]] = +param[1];
+      if (param[0] === "price") {
+        price = param[1];
+      } else {
+        ingredients[param[0]] = +param[1];
+      }
     }
 
-    this.setState({ ingredients: ingredients });
+    this.setState({ ingredients: ingredients, totalPrice: +price });
   }
 
   checkoutCanceledHandler = () => {
@@ -48,9 +53,11 @@ class Checkout extends Component {
         <Route
           path={this.props.match.path + "/contact-data"}
           render={(props) => {
-            return <Suspense fallback={<Spinner />}>
-              <ContactData {...props}/>
-            </Suspense>
+            return (
+              <Suspense fallback={<Spinner />}>
+                <ContactData {...props} price={this.state.totalPrice.toFixed(2)} ingredients={this.state.ingredients} />
+              </Suspense>
+            );
           }}
         />
       </div>

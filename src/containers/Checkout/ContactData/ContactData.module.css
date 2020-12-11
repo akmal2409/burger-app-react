@@ -28,8 +28,7 @@
 
 .ContactData form input:focus {
   transform: translateY(-0.4em);
-  color: white;
-  font-weight: 700;
+  color: black;
   transition: 0.25s ease-in;
   box-shadow: 0 0.3em 0.25em #f5af19;
   outline: none;
