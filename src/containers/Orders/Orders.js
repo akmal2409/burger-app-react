@@ -1,13 +1,48 @@
-import React, {useState, useEffect} from 'react';
-import Order from '../../components/Order/Order';
+import React, { useState, useEffect } from "react";
+import Order from "../../components/Order/Order";
+import axios from "../../axios-orders";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 const Orders = (props) => {
-  return(
-    <div>
-      <Order />
-      <Order />
-    </div>
-  );
-}
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-export default Orders;
+  useEffect(() => {
+    axios
+      .get("/orders.json")
+      .then((response) => {
+        console.log(response.data);
+        const fetchedOrders = [];
+        for (let key in response.data) {
+          fetchedOrders.push({
+            ...response.data[key],
+            id: key,
+          });
+        }
+        setOrders(fetchedOrders);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }, []);
+
+  let orderComponents = <Spinner />;
+
+  if (orders) {
+    orderComponents = orders.map((order) => {
+      return (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          price={+order.price}
+        />
+      );
+    });
+  }
+
+  return <div>{orderComponents}</div>;
+};
+
+export default withErrorHandler(Orders, axios);
