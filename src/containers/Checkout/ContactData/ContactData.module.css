@@ -1,0 +1,52 @@
+.ContactData {
+  margin: 20px auto;
+  width: 100%;
+  padding-top: 5px;
+  padding: 8px;
+  border-radius: 45px;
+  text-align: center;
+  color: black;
+  border-bottom: 5px solid #40A4C8;
+  background: #ff7f51; /* fallback for old browsers */
+}
+
+.ContactData form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ContactData form input {
+  width: 80%;
+  height: 3em;
+  border-radius: 55px;
+  padding: 0 20px;
+  margin: 10px;
+  
+  border: none;
+}
+
+.ContactData form input:focus {
+  transform: translateY(-0.4em);
+  color: white;
+  font-weight: 700;
+  transition: 0.25s ease-in;
+  box-shadow: 0 0.3em 0.25em #f5af19;
+  outline: none;
+}
+
+@media (min-width: 600px) {
+  .ContactData {
+    width: 500px;
+  }
+
+  .ContactData form {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    display: grid;
+    grid-template-columns: 0.8fr 0.8fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}

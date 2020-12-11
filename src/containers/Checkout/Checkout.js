@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
+import { Route } from "react-router-dom";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
+
+const ContactData = React.lazy(() => import("./ContactData/ContactData"));
 
 class Checkout extends Component {
   state = {
@@ -14,6 +17,7 @@ class Checkout extends Component {
     for (let param of query.entries()) {
       ingredients[param[0]] = +param[1];
     }
+
     this.setState({ ingredients: ingredients });
   }
 
@@ -41,6 +45,14 @@ class Checkout extends Component {
     return (
       <div>
         {checkout}
+        <Route
+          path={this.props.match.path + "/contact-data"}
+          render={(props) => {
+            return <Suspense fallback={<Spinner />}>
+              <ContactData {...props}/>
+            </Suspense>
+          }}
+        />
       </div>
     );
   }
