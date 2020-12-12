@@ -6,8 +6,8 @@
   border-radius: 45px;
   text-align: center;
   color: black;
-  border-bottom: 5px solid #40A4C8;
-  background: #ff7f51; /* fallback for old browsers */
+  border-bottom: 5px solid #ff7b00;
+  background: #d3d3d3; /* fallback for old browsers */
 }
 
 .ContactData form {

@@ -4,6 +4,7 @@ import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
+import { checkValidity } from '../../../components/Validator/Validator';
 
 const ContactData = (props) => {
   const [orderForm, setOrderForm] = useState({
@@ -18,6 +19,7 @@ const ContactData = (props) => {
         required: true,
       },
       valid: false,
+      touched: false
     },
     street: {
       elementType: "input",
@@ -30,6 +32,7 @@ const ContactData = (props) => {
         required: true,
       },
       valid: false,
+      touched: false
     },
     zipCode: {
       elementType: "input",
@@ -41,9 +44,11 @@ const ContactData = (props) => {
       validation: {
         required: true,
         minLength: 5,
-        maxLength: 5
+        maxLength: 5,
+        digits: true
       },
       valid: false,
+      touched: false
     },
     country: {
       elementType: "input",
@@ -56,6 +61,7 @@ const ContactData = (props) => {
         required: true,
       },
       valid: false,
+      touched: false
     },
     email: {
       elementType: "input",
@@ -66,8 +72,10 @@ const ContactData = (props) => {
       value: "",
       validation: {
         required: true,
+        email: true
       },
       valid: false,
+      touched: false
     },
     deliveryMethod: {
       elementType: "select",
@@ -77,29 +85,14 @@ const ContactData = (props) => {
           { value: "cheapest", displayValue: "Cheapest" },
         ],
       },
+      validation: {},
       value: "fastest",
     },
   });
 
+  const [isValidForm, setIsValidForm] = useState(false);
+
   const [loading, setLoading] = useState(false);
-
-  const checkValidity = (value, rules) => {
-    let isValid = true;
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    return isValid;
-  };
 
   const orderHandler = (event) => {
     event.preventDefault();
@@ -129,6 +122,15 @@ const ContactData = (props) => {
       });
   };
 
+  const touched = (id) => {
+    const updatedForm = {...orderForm};
+    const updatedFormElement = {...updatedForm[id]};
+
+    updatedFormElement.touched = true;
+    updatedForm[id] = updatedFormElement;
+    setOrderForm(updatedForm);
+  }
+
   const inputChangedHandler = (event, id) => {
     const updatedForm = {
       ...orderForm,
@@ -142,9 +144,19 @@ const ContactData = (props) => {
       updatedFormElement.value,
       updatedFormElement.validation
     );
+    updatedFormElement.touched = true;
     updatedForm[id] = updatedFormElement;
 
+    const isFormValid = true;
+
+    for (let id in updatedForm) {
+      if (!updatedForm[id].valid) {
+        isFormValid = false;
+        break;
+      }
+    }
     setOrderForm(updatedForm);
+    setIsValidForm(isFormValid);
   };
 
   const formElementsArray = Object.keys(orderForm).map((key) => {
@@ -155,7 +167,10 @@ const ContactData = (props) => {
     <form onSubmit={orderHandler}>
       {formElementsArray.map((formElement) => (
         <Input
+          clicked={() => touched(formElement.id)}
           key={formElement.id}
+          touched={formElement.config.touched}
+          invalid={!formElement.config.valid}
           elementType={formElement.config.elementType}
           elementConfig={formElement.config.elementConfig}
           value={formElement.config.value}
