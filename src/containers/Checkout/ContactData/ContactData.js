@@ -3,45 +3,118 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Input/Input";
 
 const ContactData = (props) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState({ street: "", postalCode: "" });
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    console.log(props.price);
+  const [orderForm, setOrderForm] = useState({
+    name: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Your Name",
+      },
+      value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+    },
+    street: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Street",
+      },
+      value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+    },
+    zipCode: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Zip Code",
+      },
+      value: "",
+      validation: {
+        required: true,
+        minLength: 5,
+        maxLength: 5
+      },
+      valid: false,
+    },
+    country: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Your country",
+      },
+      value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+    },
+    email: {
+      elementType: "input",
+      elementConfig: {
+        type: "email",
+        placeholder: "Your email",
+      },
+      value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+    },
+    deliveryMethod: {
+      elementType: "select",
+      elementConfig: {
+        options: [
+          { value: "fastest", displayValue: "Fastest" },
+          { value: "cheapest", displayValue: "Cheapest" },
+        ],
+      },
+      value: "fastest",
+    },
   });
 
-  const updateStreetHandler = (event) => {
-    const updatedAddress = { ...address };
-    updatedAddress.street = event.target.value;
-    setAddress(updatedAddress);
-  };
+  const [loading, setLoading] = useState(false);
 
-  const updatePostalCodeHandler = (event) => {
-    const updatedAddress = { ...address };
-    updatedAddress.postalCode = event.target.value;
-    setAddress(updatedAddress);
+  const checkValidity = (value, rules) => {
+    let isValid = true;
+
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    return isValid;
   };
 
   const orderHandler = (event) => {
     event.preventDefault();
     setLoading(true);
+
+    const formData = {};
+
+    for (let id in orderForm) {
+      formData[id] = orderForm[id].value;
+    }
+
     const order = {
       ingredients: props.ingredients,
       price: props.price,
-      customer: {
-        name: name,
-        address: {
-          street: address.street,
-          zipCode: address.postalCode,
-          country: "Netherlands",
-        },
-        email: email,
-      },
-      deliveryMethod: "fastest",
+      orderData: formData,
     };
 
     axios
@@ -49,51 +122,58 @@ const ContactData = (props) => {
       .then((response) => {
         setLoading(false);
         console.log(response);
-        props.history.replace('/');
+        props.history.replace("/");
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  let form = (<form>
-    <input
-      type="text"
-      onChange={(event) => setName(event.target.value)}
-      name="name"
-      placeholder="Your name"
-    />
-    <input
-      type="email"
-      onChange={(event) => setEmail(event.target.value)}
-      name="email"
-      placeholder="Your email"
-    />
-    <input
-      type="text"
-      onChange={(event) => updateStreetHandler(event)}
-      name="street"
-      placeholder="Street"
-    />
-    <input
-      type="text"
-      onChange={(event) => updatePostalCodeHandler(event)}
-      name="postCode"
-      placeholder="Post Code"
-    />
-    <Button btnType="Success" clicked={orderHandler}>
-      ORDER
-    </Button>
-  </form>);
+  const inputChangedHandler = (event, id) => {
+    const updatedForm = {
+      ...orderForm,
+    };
 
-  if(loading) {
+    const updatedFormElement = {
+      ...updatedForm[id],
+    };
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+    updatedForm[id] = updatedFormElement;
+
+    setOrderForm(updatedForm);
+  };
+
+  const formElementsArray = Object.keys(orderForm).map((key) => {
+    return { id: key, config: orderForm[key] };
+  });
+
+  let form = (
+    <form onSubmit={orderHandler}>
+      {formElementsArray.map((formElement) => (
+        <Input
+          key={formElement.id}
+          elementType={formElement.config.elementType}
+          elementConfig={formElement.config.elementConfig}
+          value={formElement.config.value}
+          change={(event) => inputChangedHandler(event, formElement.id)}
+        />
+      ))}
+      <Button btnType="Success">ORDER</Button>
+    </form>
+  );
+
+  if (loading) {
     form = <Spinner />;
   }
 
   return (
     <div className={classes.ContactData}>
       <h4>Enter your Contact Data</h4>
-      { form }
+      {form}
     </div>
   );
 };

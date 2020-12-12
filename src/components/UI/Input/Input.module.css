@@ -1,0 +1,43 @@
+.Input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.Label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.InputElement {
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: white;
+  font: inherit;
+  padding: 6px 10px;
+  display: block;
+  width: 90%;
+  border-radius: 55px;
+}
+
+.Select {
+  align-self: center;
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: white;
+  font: inherit;
+  padding: 10px;
+  display: block;
+  width: 90%;
+  border-radius: 20px;
+  box-sizing: content-box;
+}
+
+.InputElement:focus {
+  transform: translateY(-0.4em);
+  transition: 0.25s ease-in;
+  background-color: #ccc;
+  box-shadow: 0 0.3em 0.25em #f5af19;
+  outline: none;
+}

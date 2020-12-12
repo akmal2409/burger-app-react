@@ -2,7 +2,6 @@ import React, { Component, Suspense } from "react";
 import { Route } from "react-router-dom";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
-
 const ContactData = React.lazy(() => import("./ContactData/ContactData"));
 
 class Checkout extends Component {

@@ -1,6 +1,6 @@
 .ContactData {
   margin: 20px auto;
-  width: 100%;
+  width: 80%;
   padding-top: 5px;
   padding: 8px;
   border-radius: 45px;
@@ -13,9 +13,10 @@
 .ContactData form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
+/*
 .ContactData form input {
   width: 80%;
   height: 3em;
@@ -33,19 +34,19 @@
   box-shadow: 0 0.3em 0.25em #f5af19;
   outline: none;
 }
-
+*/
 @media (min-width: 600px) {
   .ContactData {
     width: 500px;
   }
 
-  .ContactData form {
+  /* .ContactData form {
     /* display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center; */
-    display: grid;
-    grid-template-columns: 0.8fr 0.8fr;
+    /* display: grid; */
+    /* grid-template-columns: 0.8fr 0.8fr;
     grid-template-rows: 1fr 1fr;
-  }
-}
+  } */
+} 

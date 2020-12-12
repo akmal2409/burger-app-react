@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Order.module.css";
-import Styled from 'styled-components';
-
+import Styled from "styled-components";
+import Button from "../UI/Button/Button";
 
 const StyledIngredient = Styled.span`
   text-transform: capitalize;
@@ -21,24 +21,42 @@ const StyledIngredient = Styled.span`
   }
 `;
 
-const order = (props) => {
+const Order = (props) => {
+  const [showDetails, setShowDetails] = useState(false);
 
-  const ingredients = Object.keys(props.ingredients)
-  .map(igKey => {
-    return <StyledIngredient>
-      {igKey} {props.ingredients[igKey]}
-    </StyledIngredient>
+  const ingredients = Object.keys(props.ingredients).map((igKey) => {
+    return (
+      <StyledIngredient>
+        {igKey} {props.ingredients[igKey]}
+      </StyledIngredient>
+    );
   });
-  
+
+  const viewDetailsHandler = () => {
+    setShowDetails((prevDetails) => !prevDetails);
+  };
 
   return (
     <div className={classes.Order}>
       <p>Ingredients: {ingredients}</p>
-      <p>
-        Price: <strong>USD {props.price.toFixed(2)}$</strong>
-      </p>
+      <div className={classes.Footer}>
+        <p>
+          Price: <strong>USD {props.price.toFixed(2)}$</strong>
+        </p>
+        <Button btnType="Info" clicked={viewDetailsHandler}>
+          Details
+        </Button>
+      </div>
+      {showDetails ? (
+        <div className={classes.Details}>
+          <p>Address: dsad</p>
+          <p>Street: adsda</p>
+          <p>Customer: dsadsa</p>
+          <p>Email: dsadsda</p>
+        </div>
+      ) : null}
     </div>
   );
 };
 
-export default order;
+export default Order;

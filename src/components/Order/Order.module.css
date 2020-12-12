@@ -6,3 +6,29 @@
   margin: 10px auto;
   box-sizing: border-box;
 }
+
+.Footer {
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Details {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0;
+  width: 100%;
+  animation: fade 3s;
+  transition: all ease-in;
+}
+
+@keyframes fade{
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
