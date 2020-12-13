@@ -6,6 +6,7 @@
   border-radius: 45px;
   text-align: center;
   color: black;
+  box-shadow: 0.2em 0 0.6em #ccc;
   border-bottom: 5px solid #ff7b00;
   background: #d3d3d3; /* fallback for old browsers */
 }

@@ -86,6 +86,7 @@ const ContactData = (props) => {
         ],
       },
       validation: {},
+      valid: true,
       value: "fastest",
     },
   });
@@ -122,7 +123,7 @@ const ContactData = (props) => {
       });
   };
 
-  const touched = (id) => {
+  const touchedHandler = (id) => {
     const updatedForm = {...orderForm};
     const updatedFormElement = {...updatedForm[id]};
 
@@ -147,7 +148,7 @@ const ContactData = (props) => {
     updatedFormElement.touched = true;
     updatedForm[id] = updatedFormElement;
 
-    const isFormValid = true;
+    let isFormValid = true;
 
     for (let id in updatedForm) {
       if (!updatedForm[id].valid) {
@@ -155,6 +156,7 @@ const ContactData = (props) => {
         break;
       }
     }
+    console.log(isFormValid);
     setOrderForm(updatedForm);
     setIsValidForm(isFormValid);
   };
@@ -167,7 +169,7 @@ const ContactData = (props) => {
     <form onSubmit={orderHandler}>
       {formElementsArray.map((formElement) => (
         <Input
-          clicked={() => touched(formElement.id)}
+          clicked={() => touchedHandler(formElement.id)}
           key={formElement.id}
           touched={formElement.config.touched}
           invalid={!formElement.config.valid}
@@ -177,7 +179,7 @@ const ContactData = (props) => {
           change={(event) => inputChangedHandler(event, formElement.id)}
         />
       ))}
-      <Button btnType="Success">ORDER</Button>
+      <Button btnType="Success" disabled={!isValidForm}>ORDER</Button>
     </form>
   );
 
