@@ -7,12 +7,8 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 const ContactData = React.lazy(() => import("./ContactData/ContactData"));
 
 class Checkout extends Component {
-  state = {
-    ingredients: null,
-    totalPrice: 0
-  };
 
-  componentDidMount() {
+  // componentDidMount() {
     // const query = new URLSearchParams(this.props.location.search);
     // const ingredients = {};
     // let price = 0;
@@ -25,7 +21,7 @@ class Checkout extends Component {
     // }
 
     // this.setState({ ingredients: ingredients, totalPrice: +price });
-  }
+  // }
 
   checkoutCanceledHandler = () => {
     this.props.history.goBack();

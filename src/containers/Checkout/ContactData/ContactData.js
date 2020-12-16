@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+
 import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-orders";
@@ -156,7 +158,6 @@ const ContactData = (props) => {
         break;
       }
     }
-    console.log(isFormValid);
     setOrderForm(updatedForm);
     setIsValidForm(isFormValid);
   };
@@ -195,4 +196,11 @@ const ContactData = (props) => {
   );
 };
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    price: state.totalPrice
+  }
+};
+
+export default connect(mapStateToProps)(ContactData);
