@@ -1,5 +1,7 @@
 import React, { Component, Suspense } from "react";
 import { Route } from "react-router-dom";
+import { connect } from 'react-redux';
+
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
 const ContactData = React.lazy(() => import("./ContactData/ContactData"));
@@ -11,18 +13,18 @@ class Checkout extends Component {
   };
 
   componentDidMount() {
-    const query = new URLSearchParams(this.props.location.search);
-    const ingredients = {};
-    let price = 0;
-    for (let param of query.entries()) {
-      if (param[0] === "price") {
-        price = param[1];
-      } else {
-        ingredients[param[0]] = +param[1];
-      }
-    }
+    // const query = new URLSearchParams(this.props.location.search);
+    // const ingredients = {};
+    // let price = 0;
+    // for (let param of query.entries()) {
+    //   if (param[0] === "price") {
+    //     price = param[1];
+    //   } else {
+    //     ingredients[param[0]] = +param[1];
+    //   }
+    // }
 
-    this.setState({ ingredients: ingredients, totalPrice: +price });
+    // this.setState({ ingredients: ingredients, totalPrice: +price });
   }
 
   checkoutCanceledHandler = () => {
@@ -36,12 +38,12 @@ class Checkout extends Component {
   render() {
     let checkout = <Spinner />;
 
-    if (this.state.ingredients) {
+    if (this.props.ingredients) {
       checkout = (
         <CheckoutSummary
           canceled={this.checkoutCanceledHandler}
           continued={this.checkoutContinuedHandler}
-          ingredients={this.state.ingredients}
+          ingredients={this.props.ingredients}
         />
       );
     }
@@ -54,7 +56,7 @@ class Checkout extends Component {
           render={(props) => {
             return (
               <Suspense fallback={<Spinner />}>
-                <ContactData {...props} price={this.state.totalPrice.toFixed(2)} ingredients={this.state.ingredients} />
+                <ContactData {...props} price={this.props.totalPrice.toFixed(2)} ingredients={this.props.ingredients} />
               </Suspense>
             );
           }}
@@ -64,4 +66,11 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+  }
+}
+
+export default connect(mapStateToProps)(Checkout);
